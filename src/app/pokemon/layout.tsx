@@ -1,9 +1,5 @@
-import { ReactNode } from "react";
+"use client";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-export default function Layout({ children }: LayoutProps) {
-  return { children };
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
 }
