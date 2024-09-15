@@ -1,21 +1,9 @@
-"use client";
+import { ReactNode } from "react";
 
-import { useSearchParams } from "next/navigation";
+interface LayoutProps {
+  children: ReactNode;
+}
 
-export default function Layout({
-  modal,
-  children,
-}: {
-  modal: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  const searchParams = useSearchParams();
-  const modalName = searchParams.get("evolution"); // Get name from query param
-
-  return (
-    <>
-      {modalName ? modal : null}
-      {children}
-    </>
-  );
+export default function Layout({ children }: LayoutProps) {
+  return <>{children}</>;
 }
