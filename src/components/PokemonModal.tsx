@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useRef, useEffect, MouseEventHandler } from "react";
+import { useCallback, useRef, useEffect } from "react";
 
 export default function PokemonModal({
   children,
@@ -7,19 +7,17 @@ export default function PokemonModal({
 }: {
   children: React.ReactNode;
   onDismiss: () => void;
-  pokemon?: any;
 }) {
-  const overlay = useRef(null);
-  const wrapper = useRef(null);
+  const overlay = useRef<HTMLDivElement>(null);
+  const wrapper = useRef<HTMLDivElement>(null);
 
-  // Function to close the modal when clicking outside the modal
-  const onClick: MouseEventHandler = useCallback(
-    (e) => {
+  const onClick = useCallback(
+    (e: React.MouseEvent) => {
       if (e.target === overlay.current || e.target === wrapper.current) {
-        if (onDismiss) onDismiss();
+        onDismiss();
       }
     },
-    [onDismiss, overlay, wrapper]
+    [onDismiss]
   );
 
   const onKeyDown = useCallback(
@@ -40,8 +38,7 @@ export default function PokemonModal({
       className="fixed inset-0 flex items-center justify-center"
       onClick={onClick}
     >
-      {/* Modal content */}
-      <div ref={wrapper} className="w-full max-w-3xl mx-auto max-h-full ">
+      <div ref={wrapper} className="w-full max-w-3xl mx-auto max-h-full">
         {children}
       </div>
     </div>

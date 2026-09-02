@@ -1,32 +1,16 @@
 import Image from "next/image";
-import PokemonModal from "./PokemonModal";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ListElement } from "./ListElement";
+import type { Pokemon } from "@/types";
 
-type PokemonListProps = {
-  pokemons: Array<{
-    id: string;
-    number: string;
-    name: string;
-    image: string;
-    types: string[];
-  }>;
-};
+const IMAGE_SIZE = 100;
 
-export default function PokemonList({ pokemons }: PokemonListProps) {
-  const [selectedPokemon, setSelectedPokemon] = useState(null);
+export default function PokemonList({ pokemons }: { pokemons: Pokemon[] }) {
   const router = useRouter();
-  const handleClick = (pokemon: any) => {
-    router.push(`/pokemon/${pokemon.name}`); //Navigate to the detail page of the selected Pokémon
-    setSelectedPokemon(pokemon);
-  };
 
-  const handleClose = () => {
-    setSelectedPokemon(null);
+  const handleClick = (pokemon: Pokemon) => {
+    router.push(`/pokemon/${pokemon.name}`);
   };
-
-  const imageSize = 100; //Size of the Pokémon image
 
   return (
     <div className="container mx-auto">
@@ -38,12 +22,15 @@ export default function PokemonList({ pokemons }: PokemonListProps) {
             onClick={() => handleClick(pokemon)}
           >
             <div className="flex justify-center mb-3">
-              <div style={{ width: imageSize, height: imageSize }} className="relative">
+              <div
+                style={{ width: IMAGE_SIZE, height: IMAGE_SIZE }}
+                className="relative"
+              >
                 <Image
                   src={pokemon.image}
                   alt={pokemon.name}
-                  layout="fill"
-                  objectFit="contain"
+                  fill
+                  className="object-contain"
                 />
               </div>
             </div>
@@ -55,12 +42,6 @@ export default function PokemonList({ pokemons }: PokemonListProps) {
           </div>
         ))}
       </div>
-      {/* Display the Pokémon modal when a Pokémon is selected */}
-      {selectedPokemon && (
-        <PokemonModal pokemon={selectedPokemon} onDismiss={handleClose}>
-          {" "}
-        </PokemonModal>
-      )}
     </div>
   );
 }

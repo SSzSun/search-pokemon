@@ -1,4 +1,4 @@
-const elementColor: { [key: string]: { bg: string; text: string } } = {
+const TYPE_COLORS: Record<string, { bg: string; text: string }> = {
   fire: { bg: "bg-red-500", text: "text-white" },
   water: { bg: "bg-blue-500", text: "text-white" },
   grass: { bg: "bg-green-500", text: "text-white" },
@@ -12,7 +12,6 @@ const elementColor: { [key: string]: { bg: string; text: string } } = {
   steel: { bg: "bg-gray-500", text: "text-white" },
   flying: { bg: "bg-blue-500", text: "text-white" },
   dragon: { bg: "bg-blue-500", text: "text-white" },
-  // Light background
   dark: { bg: "bg-gray-500", text: "text-white" },
   ground: { bg: "bg-yellow-500", text: "text-black" },
   fairy: { bg: "bg-pink-500", text: "text-black" },
@@ -22,13 +21,15 @@ const elementColor: { [key: string]: { bg: string; text: string } } = {
 
 export const ListElement = ({ typePokemon }: { typePokemon: string[] }) => {
   return (
-    <div className="flex flex-wrap gap-2 ">
+    <div className="flex flex-wrap gap-2">
       {typePokemon.map((type) => {
         const lowerType = type.toLowerCase();
+        const colors = TYPE_COLORS[lowerType] || TYPE_COLORS.normal;
+
         return (
           <div
             key={lowerType}
-            className={`rounded-full w-16 md:w-20 text-center text-sm md:text-base ${elementColor[lowerType].bg} ${elementColor[lowerType].text}  `}
+            className={`rounded-full w-16 md:w-20 text-center text-sm md:text-base ${colors.bg} ${colors.text}`}
           >
             {type}
           </div>

@@ -1,14 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import PokeballIcon from "@/assets/images/pokeball-icon.png";
 
-export default function SearchInput({ onSearch }: { onSearch: (name: string) => void }) {
+export default function SearchInput({
+  onSearch,
+}: {
+  onSearch: (name: string) => void;
+}) {
   const [name, setName] = useState("");
 
-  useEffect(() => {
-    onSearch(name);
-  }, [name, onSearch]);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setName(value);
+    onSearch(value);
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -28,7 +34,7 @@ export default function SearchInput({ onSearch }: { onSearch: (name: string) => 
         <input
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleChange}
           placeholder="Enter Pokémon name"
           className="rounded-lg px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-red-600"
         />
